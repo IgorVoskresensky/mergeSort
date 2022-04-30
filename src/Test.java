@@ -1,59 +1,36 @@
-import java.lang.reflect.Array;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Test {
 
 
     public static void main(String[] args) throws InterruptedException {
 
-        int[] a = new int[] {1, 4, 232, 434, 56, 1, 56, 75, 87, -1, 0};
-        mergeSorting(a);
-
-        System.out.println(Arrays.toString(a));
-
+        int[] arr = new int[]{-1, 2, 0, 1, 3, 5, 4, 9};
+        System.out.println(isIt(arr));
+        System.out.println(Arrays.toString(arr));
 
     }
 
-    public  static  void mergeSorting(int[] a){
+    public static boolean isIt(int[] arg) {
+        boolean res = false;
+        Arrays.sort(arg);
 
-        if(a.length > 1){
-            int middle = a.length / 2;
-            int [] left = new int[middle];
-            int [] right = new int[a.length - middle];
-
-            for (int i = 0; i < middle; i++) {
-                left[i] = a[i];
-            }
-            for (int i = middle; i < a.length; i++){
-                right[i - middle] = a[i];
-            }
-                mergeSorting(left);
-                mergeSorting(right);
-                merge(a, left, right);
-            }
+        for (int i : arg) {
+            if (i == 0) {
+                for (int j = 0; j < arg.length; j++) {
+                    if (arg[j] == arg[arg.length - 1]) {
+                        break;
+                    }
+                    if (arg[j + 1] == arg[j] + 1) {
+                        res = true;
+                    } else res = false;
+                }
+                return res;
+            } else return res = false;
         }
-
-    public static void merge(int[] a, int[] left, int[] right) {
-        int i = 0;
-        int j = 0;
-        int index = 0;
-        while (i < left.length && j < right.length){
-            if(left[i] < right[j]){
-                a[index] = left[i];
-                i++;
-            } else {
-                a[index] = right[j];
-                j++;
-            }
-            index++;
-        }
-        for (int leftRest = i; leftRest < left.length; leftRest++){
-            a[index++] = left[leftRest];
-        }
-        for (int rightRest = j; rightRest < right.length; rightRest++){
-            a[index++] = right[rightRest];
-        }
-
+        return res;
     }
 }
